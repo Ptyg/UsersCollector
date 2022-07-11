@@ -22,15 +22,18 @@ def get_device_id():
         returns device id
 
     Fail: 
-        returns exeption
+        raise exeption
     '''
-    print(f'{datetime.datetime.now()} [INFO] Get device id')
-    
+    Log.print_info_msg('Get device id')
+
     try:
         id = requests.get("https://ka-generator.herokuapp.com/device").text
-    except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
-        return e
+    except requests.exceptions.Timeout as e:
+        raise e
+    except requests.exceptions.TooManyRedirects as e:
+        raise e
+    except requests.exceptions.RequestException as e:
+        raise e
 
     return id
 
@@ -65,6 +68,15 @@ async def login(email: str, password: str):
         client = af.asyncfix.Client()
     except af.exceptions.AccountLimitReached:
         Log.print_error_msg(msg='To much attemts. Plese try again in 5 minutes')
+        return None
+    except requests.exceptions.Timeout as e:
+        Log.print_error_msg(msg='The request timed out')
+        return None
+    except requests.exceptions.TooManyRedirects as e:
+        Log.print_error_msg(msg='To many redirects')
+        return None
+    except requests.exceptions.RequestException as e:
+        Log.print_error_msg(msg='There was an ambiguous exception that occurred while handling your request')
         return None
 
 
