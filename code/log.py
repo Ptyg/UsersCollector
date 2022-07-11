@@ -28,7 +28,7 @@ class Log:
 
     @staticmethod
     def print_countdown(start_number: int = 3):
-        print(f'{Log.countdown_tag} Start collecting users from public in...')
+        print(f'{Log.countdown_tag} Continue work in...')
         for i in range(start_number, 0, -1):
             print(f'{Log.countdown_tag} {i}...')
             time.sleep(1)
