@@ -113,7 +113,6 @@ async def main():
     #    example:
     #        subClient.get_leaderboard_info(extra) - in this function leader type must be written.
     #                                                Or leader by reputation (rep), or the most active by day (24)
-    #                                                or the most active by 
 
         '24': collecting.addingLeaderboard,
         '7': collecting.addingLeaderboard,
