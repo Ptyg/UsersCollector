@@ -144,7 +144,6 @@ async def main():
 
     ########################## COLLECT FROM DICTIONARY 'what_collect' #########################
     
-    Log.print_info_msg('Start collecting users from public in...')
     Log.print_countdown()
     
     tasks = []
@@ -154,19 +153,20 @@ async def main():
 
     responses = await asyncio.gather(*tasks, return_exceptions=True)    
     
-    Log.print_info_msg('Users from public is collected. Start gather info in...')
+    Log.print_info_msg('Users from public is collected. Gathering info...')
     Log.print_countdown()
 
     users_id_and_nick_to_check_for_duplicate, users_for_csv = await gifu.get_info_from_users_after_public_gather(subClient, responses)
     
     tasks.clear()
-    Log.print_info_msg('Users from public is collected')
+    Log.print_info_msg('Users info from public is gathered')
     Log.print_info_msg('Current amount of users - ' + str(len(users_for_csv)))
-    Log.print_info_msg('Want to save current data or continue gather followers & following of each user?')
+    Log.print_info_msg('Want to save current data or continue gather followers & followee of each user?')
     choice = input('[INPUT] Choice (S(safe) \ C(continue)): ') 
 
     communityInfo = await subClient.get_community_info(comId)
     fileName = communityInfo.name + '_'+ time.strftime("%Y.%m.%d") + '.csv'
+    
     if choice == 'S' or choice == 'safe' or choice == 'Safe' or choice == 's':
         Log.print_info_msg('Filename is - ' + fileName)
         Log.print_info_msg('Saving data...')
@@ -174,13 +174,12 @@ async def main():
         Log.print_info_msg('Data is saved...')
         return
 
-    Log.print_info_msg('Sleep for 5 minutes before get followers and following')
+    Log.print_info_msg('Sleep for 5 minutes before get followers and followee')
     await asyncio.sleep(60 * 5)
 
-    Log.print_info_msg('Start collecting users` followers and following users in...')
+    Log.print_info_msg('Start collecting users` followers and followee')
     Log.print_countdown()
 
-     
     is_collected = False
     lastKey = None
 

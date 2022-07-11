@@ -21,12 +21,11 @@ async def getTrendingQuiz(subClient, who):
         returns exeption
 
     '''
-    
-    print(f'{datetime.datetime.now()} [INFO \ QUIZ] Get trending quiz')
+    Log.print_info_msg('Get trending quiz')    
     try:
         myList = await subClient.get_trending_quiz(size=999)
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return myList
@@ -50,11 +49,11 @@ async def getBestQuiz(subClient, who):
         returns exeption
 
     '''
-    print(f'{datetime.datetime.now()} [INFO \ QUIZ] Collect best qiuz')
+    Log.print_info_msg('Collect best qiuz')
     try:
         myList = await subClient.get_best_quiz(size=999) 
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return myList
@@ -78,11 +77,11 @@ async def getPublicChatThreads(subClient, who):
         returns exeption
     
     '''
-    print(f'{datetime.datetime.now()} [INFO \ PUBLIC CHAT] Collect public chats')
+    Log.print_info_msg('Collect public chats')
     try:
         myLists = await subClient.get_public_chat_threads(size=999)
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return myLists
@@ -104,11 +103,11 @@ async def addingLeaderboard(subClient, myType):
         returns exeption
     
     '''
-    print(f'{datetime.datetime.now()} [INFO \ LEADERS] Collect leaders: {myType}')
+    Log.print_info_msg(f'Collect leaders: {myType}')
     try:
         myList = await subClient.get_leaderboard_info(myType, size=999)  # .userId
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return myList
@@ -132,11 +131,11 @@ async def getRecentBlogs(subClient, who):
         returns exeption
     
     '''
-    print(f'{datetime.datetime.now()} [INFO \ BLOGS] Collecting recent blogs authors')
+    Log.print_info_msg('Collecting recent blogs authors')
     try:
         result = await subClient.get_recent_blogs(size=999)  # .author.userId
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
     
     return result
@@ -160,12 +159,11 @@ async def getOnlineUsers(subClient, who):
         returns exeption
     
     '''
-
-    print(f'{datetime.datetime.now()} [INFO \ ONLINE] Collecting online users')
+    Log.print_info_msg('Collecting online users')
     try:
         result = await subClient.get_online_users(size=999)  # .profile.userId
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return result
@@ -189,11 +187,11 @@ async def getRecentWikiItems(subClient, who):
         returns exeption
     
     '''
-    print(f'{datetime.datetime.now()} [INFO \ RECENT WIKI] Collecting recent wiki')
+    Log.print_info_msg('Collecting recent wiki')
     try:
         result = await subClient.get_recent_wiki_items(size=999)  # author.userId  author.nickname
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return result
@@ -209,18 +207,17 @@ async def getAllUsers(subClient, myType: str):
         myType - type of users in community   
 
     Success:
-        returns users
+        returns list of users
         
     Fail: 
         returns exeption
     
     '''
-
-    print(f'{datetime.datetime.now()} [INFO \ {myType}] Collecting users')
+    Log.print_info_msg('Collecting users')
     try:
         result = await subClient.get_all_users(myType, size=999)  # .profile.userId
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_info_msg(e)
         return e
 
     return result
@@ -243,12 +240,11 @@ async def getUserFollowers(subClient, id: str, who: str = None):
         returns exeption
     
     '''
-
-    print(f'{datetime.datetime.now()} [INFO \ FOLLOWERS] {who}`s followers')
+    Log.print_info_msg(f'{who}`s followers')
     try:
         result = await subClient.get_user_followers(id, size=999)
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return result
@@ -271,11 +267,11 @@ async def getUserFollowing(subClient, id: str, who: str = None):
         returns exeption
     
     '''
-    print(f'{datetime.datetime.now()} [INFO \ FOLLOWING] {who}`s following')
+    Log.print_info_msg(f'{who}`s following')
     try:
         result = await subClient.get_user_following(id, size=999)
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return result
@@ -299,11 +295,11 @@ async def getPrivateChats(subClient, who):
         returns exeption
     '''
 
-    print(f'{datetime.datetime.now()} [INFO \ PRIVATE CHATS] Collecting from privates chat')
+    Log.print_info_msg('Collecting from privates chat')
     try:
         result = await subClient.get_chat_threads(size=999)
     except Exception as e:
-        print(f'{datetime.datetime.now()} [ERROR] {e}')
+        Log.print_error_msg(e)
         return e
 
     return result
@@ -311,7 +307,7 @@ async def getPrivateChats(subClient, who):
         
 async def getFollowersAndFollowingFromUsersDict(subClient, listOfUserInCsvStructure: list, originDict: dict, start: str = None):
     '''
-    Get followers and following from users in dict
+    Get followers and followee from users in dict
 
     Params:
         listOfUserInCsvStructure - list of users in custom csv structure
@@ -326,7 +322,7 @@ async def getFollowersAndFollowingFromUsersDict(subClient, listOfUserInCsvStruct
         start - start key in originDict
 
     Returns:
-        вообще кроме ретурна тут возврат типо через ссылку, поэтому придумать надо че-нидь
+        flags if all possible followers and followee is collected. If not - returns flag and id to start from 
     '''
     
     dictToIterate = originDict
@@ -383,7 +379,6 @@ async def getFollowersAndFollowingFromUsersDict(subClient, listOfUserInCsvStruct
             Log.print_info_msg('Current number of users - ' + str(len(listOfUserInCsvStructure)))
             await asyncio.sleep(5 * 60)
             
-            Log.print_info_msg('Continue collecting in...')
             Log.print_countdown()
     
     originDictLen = len(originDict)
