@@ -6,6 +6,7 @@ class Log:
     info_tag = '[INFO]'
     warning_tag = '[WARNING]'
     error_tag = '[ERROR]'
+    countdown_tag = '[COUNTDOWN]'
 
     @staticmethod
     def print_info_msg(msg: str) -> None:
@@ -27,6 +28,7 @@ class Log:
 
     @staticmethod
     def print_countdown(start_number: int = 3):
+        print(f'{Log.countdown_tag} Start collecting users from public in...')
         for i in range(start_number, 0, -1):
-            print(f'{datetime.datetime.now()} [INFO] {i}...')
+            print(f'{Log.countdown_tag} {i}...')
             time.sleep(1)
