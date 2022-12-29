@@ -148,6 +148,9 @@ class Save:
     @staticmethod
     def saveJson(fileName: str, users: list) -> None:
         Log.print_warning_msg(f'Current amount of users - {len(users)}')
+        
+        os.path.abspath(os.getcwd())
+        
         fileName += '.json'    
 
         with open(fileName, 'w', encoding='UTF8') as f:
