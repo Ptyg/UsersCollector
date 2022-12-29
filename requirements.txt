@@ -2,4 +2,7 @@ amino.fix
 asyncio
 requests
 datetime
-csv
+colorama
+mysql-connector-python
+pymongo
+pyfiglet
