@@ -1,10 +1,14 @@
 import csv
+import sys
+sys.path.append("..")
 import types
 import time
 import aminofix as af
 import json
+import os
 from .log import Log
 from .input import Input
+from constant import PATH_TO_SAVE
 
 import mysql.connector
 from pymongo import MongoClient
@@ -148,12 +152,11 @@ class Save:
     @staticmethod
     def saveJson(fileName: str, users: list) -> None:
         Log.print_warning_msg(f'Current amount of users - {len(users)}')
-        
-        os.path.abspath(os.getcwd())
-        
-        fileName += '.json'    
 
-        with open(fileName, 'w', encoding='UTF8') as f:
+        fileName += '.json'
+        pathToSaveFile = PATH_TO_SAVE + fileName 
+
+        with open(pathToSaveFile, 'w', encoding='UTF8') as f:
             f.write(json.dumps(users, indent=4))
 
         Log.print_info_msg(f'Data is saved. Filename - \"{fileName}\"')
@@ -165,9 +168,11 @@ class Save:
         Log.print_warning_msg(f'Current amount of users - {len(users)}')
 
         fileName += '.csv'
+        pathToSaveFile = PATH_TO_SAVE + fileName 
+
         fieldnamesCsv = list(users[0].keys())
 
-        with open(fileName, 'w', encoding='UTF8', newline='') as f:
+        with open(pathToSaveFile, 'w', encoding='UTF8', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnamesCsv)
             writer.writeheader()
             writer.writerows(users)
